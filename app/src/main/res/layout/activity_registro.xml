@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistroActivity"
+    android:background="@drawable/fondo">
+
+    <EditText
+        android:id="@+id/txtApellido"
+        android:layout_width="310dp"
+        android:layout_height="40sp"
+        android:layout_marginTop="5dp"
+        android:autofillHints=""
+        android:background="@drawable/input_field"
+        android:ems="10"
+        android:hint="@string/Apellido"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/blanco"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNombre"
+        tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
+
+    <EditText
+        android:id="@+id/txtNombre"
+        android:layout_width="310dp"
+        android:layout_height="40sp"
+        android:layout_marginTop="5dp"
+        android:autofillHints=""
+        android:background="@drawable/input_field"
+        android:ems="10"
+        android:hint="@string/Nombre"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/blanco"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtContraseña"
+        tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
+
+    <EditText
+        android:id="@+id/txtContraseña"
+        android:layout_width="310dp"
+        android:layout_height="40sp"
+        android:layout_marginTop="5dp"
+        android:autofillHints=""
+        android:background="@drawable/input_field"
+        android:ems="10"
+        android:hint="@string/contrasena"
+        android:inputType="textPassword"
+        android:textColorHint="@color/blanco"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtMail"
+        tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="212dp"
+        android:layout_height="181dp"
+        android:layout_marginTop="52dp"
+        android:contentDescription="TODO"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txvNombreApp"
+        app:srcCompat="@drawable/logo"
+        tools:ignore="ContentDescription,HardcodedText" />
+
+    <EditText
+        android:id="@+id/txtMail"
+        android:layout_width="310dp"
+        android:layout_height="40sp"
+        android:layout_marginTop="104dp"
+        android:autofillHints=""
+        android:background="@drawable/input_field"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/blanco"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
+
+    <Button
+        android:id="@+id/btnEntrar"
+        android:layout_width="125dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button"
+        android:text="Registrar"
+        android:textAllCaps="false"
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtApellido"
+        tools:ignore="HardcodedText,RtlHardcoded,SpUsage"/>
+
+    <Button
+        android:id="@+id/btnCancelar"
+        android:layout_width="125dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/button"
+        android:text="Cancelar"
+        android:textAllCaps="false"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtApellido"
+        tools:ignore="HardcodedText,RtlHardcoded,SpUsage" />
+
+    <TextView
+        android:id="@+id/txvNombreApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/bold"
+        android:text="@string/Nombre_Empresa"
+        android:textColor="@color/blanco"
+        android:textSize="42sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

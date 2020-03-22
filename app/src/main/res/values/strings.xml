@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Tesis</string>
+    <string name="desc">image</string>
+    <string name="bienvenido">Bienvenido!</string>
+    <string name="a_n_no_tienes_cuenta">¿Aún no tienes cuenta?</string>
+    <string name="reg_strate">Regístrate</string>
+    <string name="login">Login</string>
+    <string name="usuario_email">Email</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="olvido_contraseña">¿Has olvidado tu contraseña?</string>
+    <string name="Nombre_Empresa">EcoWatts</string>
+    <string name="Nombre">Nombre</string>
+    <string name="Apellido">Apellido</string>
+    <string name="todo">TODO</string>
+    <string name="entrar">Entrar</string>
+</resources>

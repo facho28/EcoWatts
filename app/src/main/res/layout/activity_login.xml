@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:background="@drawable/fondo">
+
+    <EditText
+        android:id="@+id/txtContraseña"
+        android:layout_width="310dp"
+        android:layout_height="40sp"
+        android:textSize="15dp"
+        android:layout_marginBottom="280dp"
+        android:autofillHints=""
+        android:background="@drawable/input_field"
+        android:ems="10"
+        android:hint="@string/contrasena"
+        android:inputType="textPassword"
+        android:textColorHint="@color/blanco"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/lblRegistar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/bold"
+        android:textSize="12dp"
+        android:text="@string/reg_strate"
+        android:textColor="@color/celeste"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.306"
+        app:layout_constraintStart_toEndOf="@+id/lblPreguntaCuenta"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <TextView
+
+        android:id="@+id/lblPreguntaCuenta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/bold"
+        android:textSize="12dp"
+        android:text="@string/a_n_no_tienes_cuenta"
+        android:textColor="@color/gris"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="212dp"
+        android:layout_height="181dp"
+        app:layout_constraintBottom_toTopOf="@+id/txtMail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txvNombreApp"
+        app:srcCompat="@drawable/logo" />
+
+    <EditText
+        android:id="@+id/txtMail"
+        android:layout_width="310dp"
+        android:layout_height="40sp"
+        android:autofillHints=""
+        android:textSize="15dp"
+        android:background="@drawable/input_field"
+        android:ems="10"
+        android:hint="@string/usuario_email"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/blanco"
+        app:layout_constraintBottom_toTopOf="@+id/txtContraseña"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.961" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEntrar"
+        app:srcCompat="@drawable/linea" />
+
+    <TextView
+        android:id="@+id/lblOlvidar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/bold"
+        android:text="@string/olvido_contraseña"
+        android:textColor="@color/celeste"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnEntrar"
+        app:layout_constraintTop_toBottomOf="@+id/txtContraseña"
+        android:onClick="Olvidar"
+        android:clickable="true"/>
+
+    <Button
+        android:id="@+id/btnEntrar"
+        android:layout_width="125dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/button"
+        android:onClick="entrar"
+        android:text="Entrar"
+        android:textAllCaps="false"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.106"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtContraseña" />
+
+    <TextView
+        android:id="@+id/txvNombreApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/bold"
+        android:text="@string/Nombre_Empresa"
+        android:textColor="@color/blanco"
+        android:textSize="42sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
