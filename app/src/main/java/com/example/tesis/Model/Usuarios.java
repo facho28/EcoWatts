@@ -4,17 +4,15 @@ public class Usuarios {
     private String nombre;
     private String apellido;
     private String correo;
-    private String contraseña;
     private int estado;
 
     public Usuarios() {
     }
 
-    public Usuarios(String nombre, String apellido, String correo, String contraseña, int estado) {
+    public Usuarios(String nombre, String apellido, String correo, int estado) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
-        this.contraseña = contraseña;
         this.estado = estado;
     }
 
@@ -40,14 +38,6 @@ public class Usuarios {
 
     public void setCorreo(String correo) {
         this.correo = correo;
-    }
-
-    public String getContraseña() {
-        return contraseña;
-    }
-
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
     }
 
     public int getEstado() {

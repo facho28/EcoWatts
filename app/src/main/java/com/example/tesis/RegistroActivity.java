@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tesis.Model.Usuarios;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
@@ -19,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.UUID;
 
 public class RegistroActivity extends AppCompatActivity {
 
@@ -68,10 +71,10 @@ public class RegistroActivity extends AppCompatActivity {
         //Agregar validación de contraseña (length >= 6)
         if (validacion()){
             // Guardo en las variables los contenidos de los txt
-            String mail  = txtMail.getText().toString();
-            String password = txtPass.getText().toString();
-            String nombre = txtNombre.getText().toString();
-            String apellido = txtApellido.getText().toString();
+            final String mail  = txtMail.getText().toString();
+            final String password = txtPass.getText().toString();
+            final String nombre = txtNombre.getText().toString();
+            final String apellido = txtApellido.getText().toString();
 
             //Comienza el ProgressBar
             progressBar.setMessage("Realizando registro en linea");
@@ -84,13 +87,26 @@ public class RegistroActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                // Si el resgistro es correcto, obtengo informacion del usuario y muestro mensaje.
+                                // Si el resgistro es correcto, obtengo informacion del usuario, creo registro en tabla de usuarios y muestro mensaje.
+
+                                //Creo objeto del tipo usuario y le asigno los datos del registro
+                                Usuarios P = new Usuarios();
+                                P.setCorreo(mail);
+                                P.setNombre(nombre);
+                                P.setApellido(apellido);
+                                P.setEstado(1);
+
+                                //Inserto los datos en la tabla Usuarios de la BD
+                                databaseReference.child("Usuarios").child(UUID.randomUUID().toString()).setValue(P);
+
+                                //Mensaje
                                 Log.d(TAG, "createUserWithEmail:success");
                                 Toast.makeText(RegistroActivity.this, "Registro exitoso!",
                                         Toast.LENGTH_LONG).show();
 
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 //updateUI(user);
+
                                 limpartCajas();
                                 finish(); //Vuelvo a pantalla de login.
                             } else { //Error en el registro del usuario.
