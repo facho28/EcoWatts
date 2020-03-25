@@ -1,7 +1,6 @@
 package com.example.tesis.Model;
 
 public class Usuarios {
-    private String idUsuario;
     private String nombre;
     private String apellido;
     private String correo;
@@ -11,21 +10,12 @@ public class Usuarios {
     public Usuarios() {
     }
 
-    public Usuarios(String idUsuario, String nombre, String apellido, String correo, String contraseña, int estado) {
-        this.idUsuario = idUsuario;
+    public Usuarios(String nombre, String apellido, String correo, String contraseña, int estado) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.correo = correo;
         this.contraseña = contraseña;
         this.estado = estado;
-    }
-
-    public String getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
     }
 
     public String getNombre() {

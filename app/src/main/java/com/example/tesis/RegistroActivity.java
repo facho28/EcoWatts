@@ -1,34 +1,33 @@
 package com.example.tesis;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.tesis.Model.Usuarios;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 
 public class RegistroActivity extends AppCompatActivity {
 
     private EditText txtMail, txtPass, txtNombre, txtApellido;
-    private List<Usuarios> listPerson = new ArrayList<Usuarios>();
-    ArrayAdapter<Usuarios> arrayAdapterPersona;
-    ListView listV_personas;
+    private ProgressDialog progressBar;
 
+    //Variables utilizadas para Firebase
+    private static final String TAG = "EmailPassword"; //Variable para el LOG de consola.
+    private FirebaseAuth mAuth;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
@@ -38,65 +37,91 @@ public class RegistroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
+        // Variables creadas para vincular con la interfaz grafica activity_registro.xml
         txtMail = (EditText) findViewById(R.id.txtMail);
         txtPass = (EditText) findViewById(R.id.txtContraseña);
         txtNombre = (EditText) findViewById(R.id.txtNombre);
         txtApellido = (EditText) findViewById(R.id.txtApellido);
-        listV_personas = findViewById(R.id.lstView);
+        progressBar = new ProgressDialog(this);
 
+
+        // Inicializar Firebase y metodo de autentificacion por Mail.
         inicializarFirebase();
-        listarDatos();
+        mAuth = FirebaseAuth.getInstance();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Compruebe si el usuario ha iniciado sesión (no es nulo) y actualice la IU en consecuencia.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        //updateUI(currentUser);
+    }
+
+    //Metodo para actualizar los datos del usuario ya registrado.
+    //Falta agregar que se debe actualizar y que datos que retorna. Dejo comentado los llamados.
+    private void updateUI(FirebaseUser currentUser) {
     }
 
     public void Registrar(View view){
-        //Valido los datos ingresados en el registro
+        //Valido los datos ingresados en el registro si no estan vacios.
+        //Agregar validación de contraseña (length >= 6)
         if (validacion()){
+            // Guardo en las variables los contenidos de los txt
             String mail  = txtMail.getText().toString();
             String password = txtPass.getText().toString();
             String nombre = txtNombre.getText().toString();
             String apellido = txtApellido.getText().toString();
 
-            //Creo objeto del tipo usuario y le asigno los datos del registro
-            Usuarios P = new Usuarios();
-            P.setIdUsuario(UUID.randomUUID().toString());
-            P.setCorreo(mail);
-            P.setContraseña(password);
-            P.setNombre(nombre);
-            P.setApellido(apellido);
+            //Comienza el ProgressBar
+            progressBar.setMessage("Realizando registro en linea");
+            progressBar.show();
 
-            //Inserto los datos en la tabla Usuarios de la BD
-            databaseReference.child("Usuarios").child(P.getIdUsuario()).setValue(P);
+            //Metodo estandar de Firebase para registrar usuarios por autentificación de Mail.
+            //Se pasa por parametro el mail y la contraseña.
+            mAuth.createUserWithEmailAndPassword(mail, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Si el resgistro es correcto, obtengo informacion del usuario y muestro mensaje.
+                                Log.d(TAG, "createUserWithEmail:success");
+                                Toast.makeText(RegistroActivity.this, "Registro exitoso!",
+                                        Toast.LENGTH_LONG).show();
 
-            Toast.makeText(this, "Registro exitoso!", Toast.LENGTH_LONG).show();
-            limpartCajas();
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                //updateUI(user);
+                                limpartCajas();
+                                finish(); //Vuelvo a pantalla de login.
+                            } else { //Error en el registro del usuario.
+                                if (task.getException() instanceof FirebaseAuthUserCollisionException){ // Si el usuario ya existe.
+                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                    Toast.makeText(RegistroActivity.this, "Este usuario ya existe!",
+                                            Toast.LENGTH_LONG).show();
+                                }else {  // Si el registro fallo.
+                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                    Toast.makeText(RegistroActivity.this, "No se pudo registrar el usuario!",
+                                            Toast.LENGTH_LONG).show();
+                                }
+
+
+                                //updateUI(null);
+                                limpartCajas();
+                            }
+                            //Finaliza el ProgressBar
+                            progressBar.dismiss();
+                        }
+                    });
         }else {
-            limpartCajas();
+            //Mensaje cuando falta completar los datos de los txt
+            Toast.makeText(RegistroActivity.this, "Completar los datos",
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
+    //Accion del boton Cancelar
     public void Cancelar(View view){
         finish();
-    }
-
-    private void listarDatos() {
-        databaseReference.child("Usuarios").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listPerson.clear();
-                for (DataSnapshot objSnaptshot : dataSnapshot.getChildren()){
-                    Usuarios p = objSnaptshot.getValue(Usuarios.class);
-                    listPerson.add(p);
-
-                    arrayAdapterPersona = new ArrayAdapter<Usuarios>(RegistroActivity.this, android.R.layout.simple_list_item_1, listPerson);
-                    listV_personas.setAdapter(arrayAdapterPersona);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     //Metodo para limpiar el contenido de los EditText
@@ -107,7 +132,7 @@ public class RegistroActivity extends AppCompatActivity {
         txtApellido.setText("");
     }
 
-    //Metodo para validar los datos ingresados en los EditText
+    //Metodo para validar los datos ingresados en los EditText si no son vacios.
     private boolean validacion() {
         String mail     = txtMail.getText().toString();
         String password = txtPass.getText().toString();
@@ -138,6 +163,5 @@ public class RegistroActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
-
     }
 }
